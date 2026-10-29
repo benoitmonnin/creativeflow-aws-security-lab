@@ -50,7 +50,7 @@ in the protected `app-logs/` S3 prefix.
 The following screenshot demonstrates that AWS IAM
 and S3 enforced the Contributor role restrictions.
 
-![AWS CLI access denied](05-aws-cli-access-denied.png)
+![AWS CLI access denied](05-aws-cli-access-denied-original.png)
 
 ### Test 1 — Application Log Access
 
