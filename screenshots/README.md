@@ -93,3 +93,14 @@ S3 prefix.
 
 **Result:** PASS — Developer S3 log access allowed.
 
+## Contributor — Document Upload
+
+The AWS CLI confirms that the Contributor IAM role
+successfully uploaded a test document to the
+`uploads/drafts/` S3 prefix.
+
+![Contributor document upload](03-contributor-document-upload-cli.png)
+
+**Result:** PASS — Contributor S3 upload permitted.
+
+
