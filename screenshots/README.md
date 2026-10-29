@@ -29,3 +29,18 @@ to the developer-only log feature.
 
 The AWS CLI independently confirmed S3 access restrictions
 with a 403 Forbidden response.
+
+## Developer — Access Granted
+
+The following screenshot demonstrates that the
+CreativeFlow application recognized the Developer
+IAM role and allowed access to the developer-only
+log feature.
+
+![Developer access granted](01-developer-access-granted.png)
+
+**Result:** PASS — Developer log access granted.
+
+This was also independently verified using AWS CLI
+by successfully uploading and reading a file
+in the protected `app-logs/` S3 prefix.
