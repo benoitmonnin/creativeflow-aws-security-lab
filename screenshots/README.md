@@ -37,7 +37,7 @@ CreativeFlow application recognized the Developer
 IAM role and allowed access to the developer-only
 log feature.
 
-![Developer access granted](01-developer-access-granted.png)
+![Developer access granted](01-developer-access-granted-original.png)
 
 **Result:** PASS — Developer log access granted.
 
