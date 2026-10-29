@@ -44,3 +44,41 @@ log feature.
 This was also independently verified using AWS CLI
 by successfully uploading and reading a file
 in the protected `app-logs/` S3 prefix.
+
+## AWS CLI — IAM Access Control Verification
+
+The following screenshot demonstrates that AWS IAM
+and S3 enforced the Contributor role restrictions.
+
+![AWS CLI access denied](05-aws-cli-access-denied.png)
+
+### Test 1 — Application Log Access
+
+**Action:** Download a file from the protected
+`app-logs/` S3 prefix.
+
+**Expected:** Access denied.
+
+**Actual:** `403 Forbidden (HeadObject)`
+
+**Result:** PASS
+
+### Test 2 — S3 Bucket Root Listing
+
+**Action:** List the root of the CreativeFlow S3 bucket.
+
+**Expected:** Access denied.
+
+**Actual:** `AccessDenied (ListObjectsV2)`
+
+**Result:** PASS
+
+### Security Conclusion
+
+The Contributor role was allowed to upload and
+download documents under `uploads/`, but was
+prevented from accessing protected application logs
+or listing the S3 bucket root.
+
+These tests provide independent evidence of
+AWS IAM authorization enforcement.
