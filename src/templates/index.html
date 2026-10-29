@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CreativeFlow Document Portal</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 40px;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .upload-area {
+        border: 2px dashed #ccc;
+        padding: 20px;
+        margin: 20px 0;
+      }
+      .file-list {
+        margin: 20px 0;
+      }
+      .file-item {
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+      }
+      .error {
+        color: red;
+      }
+      .success {
+        color: green;
+      }
+      .role-info {
+        background: #f0f0f0;
+        padding: 10px;
+        margin: 10px 0;
+      }
+      button {
+        padding: 10px 20px;
+        margin: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>CreativeFlow Document Portal</h1>
+
+      <div class="role-info"><strong>Current Role:</strong> {{ role }}</div>
+
+      {% if error %}
+      <div class="error">Error: {{ error }}</div>
+      {% endif %}
+
+      <div class="upload-area">
+        <h3>Upload Document</h3>
+        <form id="uploadForm" enctype="multipart/form-data">
+          <input type="file" id="fileInput" name="file" required />
+          <select name="category" id="category">
+            <option value="drafts">Drafts</option>
+            <option value="final">Final</option>
+            <option value="client-assets">Client Assets</option>
+          </select>
+          <button type="submit">Upload</button>
+        </form>
+        <div id="message"></div>
+      </div>
+
+      <div class="file-list">
+        <h3>Uploaded Files</h3>
+        <div id="filesList">
+          {% for file in files %}
+          <div class="file-item">
+            <strong>{{ file.name }}</strong>
+            ({{ file.size }} bytes, {{ file.last_modified }})
+            <a href="{{ url_for('download_file', filename=file.key[8:]) }}"
+              >Download</a
+            >
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div>
+        <h3>Test Access Levels</h3>
+        <button onclick="testLogAccess()">
+          Test Log Access (Developers Only)
+        </button>
+        <button onclick="refreshFiles()">Refresh File List</button>
+        <div id="testResults"></div>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("uploadForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const formData = new FormData();
+          const fileInput = document.getElementById("fileInput");
+          const category = document.getElementById("category").value;
+
+          formData.append("file", fileInput.files[0]);
+          formData.append("category", category);
+
+          try {
+            const response = await fetch("/upload", {
+              method: "POST",
+              body: formData,
+            });
+
+            const result = await response.json();
+            const messageDiv = document.getElementById("message");
+
+            if (response.ok) {
+              messageDiv.textContent = result.message;
+              messageDiv.className = "success";
+              refreshFiles();
+            } else {
+              messageDiv.textContent = result.error;
+              messageDiv.className = "error";
+            }
+          } catch (error) {
+            document.getElementById("message").textContent =
+              `Upload failed: ${error}`;
+          }
+        });
+
+      async function testLogAccess() {
+        try {
+          const response = await fetch("/logs");
+          const result = await response.json();
+          const resultsDiv = document.getElementById("testResults");
+
+          if (response.ok) {
+            resultsDiv.textContent = "Log access granted - Developer role confirmed";
+            resultsDiv.className = "success";
+          } else if (response.status === 403 && result.access === "denied") {
+            resultsDiv.textContent = "Log access denied - Contributor role detected";
+            resultsDiv.className = "error";
+          } else {
+            resultsDiv.textContent = "Log access check failed";
+            resultsDiv.className = "error";
+          }
+        } catch (error) {
+          document.getElementById("testResults").textContent =
+            `Test failed: ${error}`;
+        }
+      }
+
+      async function refreshFiles() {
+        try {
+          const response = await fetch("/files");
+          const result = await response.json();
+
+          // Update file list (simplified for demo)
+          location.reload();
+        } catch (error) {
+          console.error("Failed to refresh files:", error);
+        }
+      }
+    </script>
+  </body>
+</html>
