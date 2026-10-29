@@ -82,3 +82,14 @@ or listing the S3 bucket root.
 
 These tests provide independent evidence of
 AWS IAM authorization enforcement.
+
+## Developer — S3 Log Access
+
+The Developer IAM role successfully uploaded and
+downloaded a log file from the protected `app-logs/`
+S3 prefix.
+
+![Developer S3 log access](02-developer-s3-log-access.png)
+
+**Result:** PASS — Developer S3 log access allowed.
+
