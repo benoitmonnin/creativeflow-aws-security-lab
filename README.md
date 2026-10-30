@@ -139,3 +139,37 @@ This project strengthened my understanding of:
 ---
 
 **Project completed as part of my Jedha Fullstack Cybersecurity training.**
+
+
+
+---
+
+## Project Documentation
+
+Explore the complete CreativeFlow AWS cybersecurity project:
+
+| Component | Description | Link |
+|---|---|---|
+| AWS Architecture | Cloud architecture and security design | [View architecture](architecture/aws-architecture.md) |
+| IAM Security Tests | Developer and Contributor permissions | [View test report](docs/security-test-results.md) |
+| Security Evidence | Five screenshots of actual AWS security tests | [View evidence](screenshots/README.md) |
+| Python Application | Flask and Boto3 source code | [View source](src/app.py) |
+| Web Interface | HTML document management application | [View template](src/templates/index.html) |
+| Dependencies | Required Python packages | [View requirements](src/requirements.txt) |
+
+## Project Status
+
+**Completed:** 29 October 2026
+
+- AWS infrastructure deployed and tested
+- IAM permissions verified
+- S3 document operations tested
+- Security evidence documented
+- AWS project resources removed after testing
+
+**Note:** The source code includes a post-lab correction
+to the S3 download function that has not been retested
+against live AWS infrastructure.
+
+This project is an educational cybersecurity lab,
+not a production deployment.
